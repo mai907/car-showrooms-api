@@ -33,8 +33,8 @@ public class ShowroomController {
     @GetMapping
     public ResponseEntity<Page<ShowroomResponseDto>> getAllShowroom (@RequestParam(defaultValue = "1") int pageNo,
                                                                      @RequestParam(defaultValue = "10") int pageSize,
-                                                                     @RequestParam String sortBy,
-                                                                     @RequestParam String sortDir) {
+                                                                     @RequestParam(defaultValue = "id") String sortBy,
+                                                                     @RequestParam(defaultValue = "ASC") String sortDir) {
         Page<ShowroomResponseDto> Showrooms =  showroomService.getAllShowrooms(pageNo, pageSize, sortBy, sortDir );
         return new ResponseEntity<>(Showrooms, HttpStatus.OK);
     }
