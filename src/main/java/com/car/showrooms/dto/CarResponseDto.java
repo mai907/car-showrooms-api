@@ -12,6 +12,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class CarResponseDto {
 
+    private Long id;
     private String vin;
     private String maker;
     private String model;

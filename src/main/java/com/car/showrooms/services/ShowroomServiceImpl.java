@@ -43,7 +43,7 @@ public class ShowroomServiceImpl implements ShowroomService {
         Showroom showroom = showroomRepository.findByIdAndDeletedIsFalse(id).
                 orElseThrow(() -> new RuntimeException("Showroom not found"));
 
-        showroom.setContactNumber(showroomDto.getContactNumber());
+        showroom.setContactNumber(Long.valueOf(showroomDto.getContactNumber()));
         showroom.setMangerName(showroomDto.getMangerName());
         showroom.setAddress(showroomDto.getAddress());
 

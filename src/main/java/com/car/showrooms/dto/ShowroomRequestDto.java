@@ -1,10 +1,8 @@
 package com.car.showrooms.dto;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.validation.constraints.*;
+import lombok.*;
 
 @Getter
 @Setter
@@ -12,10 +10,24 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ShowroomRequestDto {
 
+    @NotBlank
+    @Size(max = 100)
     private String name;
-    private Integer commercialRegistrationNumber;
+
+    @NotBlank
+    @Size(min = 1, max = 15)
+    @Pattern(regexp = "\\d{1,15}")
+    private String commercialRegistrationNumber;
+
+    @Size(max = 100)
     private String mangerName;
-    private Integer contactNumber;
+
+    @NotBlank
+    @Size(min = 1, max = 15)
+    @Pattern(regexp = "\\d{1,15}")
+    private String contactNumber;
+
+    @Size(max = 255)
     private String address;
 
 

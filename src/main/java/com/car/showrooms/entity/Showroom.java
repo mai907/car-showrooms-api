@@ -20,11 +20,11 @@ public class Showroom {
     @Column(nullable = false, length = 100)
     private String name;
     @Column(nullable = false, length = 10, unique = true)
-    private Integer cmr;
+    private Long cmr;
     @Column(length = 100)
     private String mangerName;
     @Column(nullable = false, length = 15)
-    private Integer contactNumber;
+    private Long contactNumber;
     @Column(length = 255)
     private String address;
     private boolean deleted;

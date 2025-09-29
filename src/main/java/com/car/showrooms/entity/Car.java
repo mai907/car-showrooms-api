@@ -25,7 +25,7 @@ public class Car {
     @Column(nullable = false, length = 25)
     private String model;
     @Column(nullable = false, length = 4)
-    private Integer modelYear;
+    private Long modelYear;
     @Column(nullable = false)
     private Double price;
 

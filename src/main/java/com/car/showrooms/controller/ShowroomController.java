@@ -5,6 +5,7 @@ import com.car.showrooms.dto.ShowroomResponseDto;
 import com.car.showrooms.entity.Car;
 import com.car.showrooms.entity.Showroom;
 import com.car.showrooms.services.ShowroomService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
@@ -21,7 +22,7 @@ public class ShowroomController {
 
 //1.	Create Car Showroom API
     @PostMapping
-    public ResponseEntity<ShowroomResponseDto> createShowroom (@RequestBody ShowroomRequestDto showroomDto) {
+    public ResponseEntity<ShowroomResponseDto> createShowroom (@RequestBody @Valid ShowroomRequestDto showroomDto) {
         ShowroomResponseDto showroomResDto = showroomService.createShowroom(showroomDto);
         return new ResponseEntity<>(showroomResDto, HttpStatus.CREATED);
 
@@ -44,7 +45,7 @@ public class ShowroomController {
 //4.	Update Car Showroom API
     @PutMapping("{id}")
     public ResponseEntity<ShowroomResponseDto> updateShowroomById (@PathVariable Long id,
-                                                     @RequestBody ShowroomRequestDto ShowroomDto) {
+                                                                   @Valid @RequestBody ShowroomRequestDto ShowroomDto) {
         ShowroomResponseDto showroomResDto = showroomService.updateShowroom(id, ShowroomDto);
         return new ResponseEntity<>(showroomResDto, HttpStatus.OK);
     }
