@@ -9,6 +9,10 @@ import com.car.showrooms.mapper.CarMapper;
 import com.car.showrooms.repository.CarRepository;
 import com.car.showrooms.repository.ShowroomRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,10 +36,12 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public List<CarResponseDto> getAllCars() {
-        List<Car> cars = carRepository.findByShowroom_DeletedFalse();
-        return cars.stream().map(CarMapper.MAPPER::mapToCarResponseDto)
+    public Page<CarResponseDto> getAllCars(int page, int size) {
+        Pageable pageable = PageRequest.of(page-1, size);
+        Page<Car> cars = carRepository.findByShowroom_DeletedFalse(pageable);
+       var dtoList =  cars.stream().map(CarMapper.MAPPER::mapToCarResponseDto)
                 .collect(Collectors.toList());
+         return new PageImpl<>(dtoList, cars.getPageable(), cars.getTotalElements());
     }
 
 }

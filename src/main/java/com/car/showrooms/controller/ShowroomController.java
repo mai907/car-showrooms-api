@@ -8,6 +8,7 @@ import com.car.showrooms.services.ShowroomService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,8 +31,11 @@ public class ShowroomController {
 
 //2.	List Car Showrooms API
     @GetMapping
-    public ResponseEntity<List<ShowroomResponseDto>> getAllShowroom (){
-        List<ShowroomResponseDto> Showrooms =  showroomService.getAllShowrooms();
+    public ResponseEntity<Page<ShowroomResponseDto>> getAllShowroom (@RequestParam(defaultValue = "1") int pageNo,
+                                                                     @RequestParam(defaultValue = "10") int pageSize,
+                                                                     @RequestParam String sortBy,
+                                                                     @RequestParam String sortDir) {
+        Page<ShowroomResponseDto> Showrooms =  showroomService.getAllShowrooms(pageNo, pageSize, sortBy, sortDir );
         return new ResponseEntity<>(Showrooms, HttpStatus.OK);
     }
 

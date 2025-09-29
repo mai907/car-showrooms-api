@@ -8,6 +8,7 @@ import com.car.showrooms.exception.ResourceNotFoundException;
 import com.car.showrooms.mapper.ShowroomMapper;
 import com.car.showrooms.repository.ShowroomRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,10 +36,20 @@ public class ShowroomServiceImpl implements ShowroomService {
     }
 
     @Override
-    public List<ShowroomResponseDto> getAllShowrooms() {
-        List<Showroom> showrooms =  showroomRepository.findByDeletedIsFalse();
-        return showrooms.stream().map(ShowroomMapper.MAPPER::mapToShowroomResponseDto)
-                .collect(Collectors.toList());
+    public Page<ShowroomResponseDto> getAllShowrooms(int page, int size, String sortBy, String order) {
+        Sort sort = order.equalsIgnoreCase("ASC") ?
+                 Sort.by(sortBy).ascending()
+                :Sort.by(sortBy).descending();
+
+        Pageable pageable = PageRequest.of(page-1, size, sort);
+
+        Page<Showroom> showrooms =  showroomRepository.findByDeletedIsFalse(pageable);
+
+         List <ShowroomResponseDto> dtoList = showrooms.stream()
+                 .map(ShowroomMapper.MAPPER::mapToShowroomResponseDto)
+                 .collect(Collectors.toList());
+
+         return new PageImpl<>(dtoList, showrooms.getPageable(), showrooms.getTotalElements());
 
     }
 

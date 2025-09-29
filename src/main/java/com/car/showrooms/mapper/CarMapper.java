@@ -21,8 +21,4 @@ public interface CarMapper {
     @Mapping(source ="showroom.contactNumber" , target = "contactNumber")
     CarResponseDto mapToCarResponseDto(Car car);
 
-//    @Mapping(source ="price" , target = "amount")
-//    @Mapping(source ="showroom.name" , target = "carShowroomName")
-//    @Mapping(source ="showroom.contactNumber" , target = "contactNumber")
-//    CarResponseDto mapToCarResponseDto(Car car, Showroom showroom);
 }

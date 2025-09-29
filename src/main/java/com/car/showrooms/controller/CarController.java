@@ -7,6 +7,7 @@ import com.car.showrooms.entity.Car;
 import com.car.showrooms.services.CarService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,8 +30,9 @@ public class CarController {
 
     //    7.	List Cars with Showroom Details API
     @GetMapping
-    public ResponseEntity<List<CarResponseDto>> getAllCarsWithShowroom () {
-        List<CarResponseDto> cars = carService.getAllCars();
+    public ResponseEntity<Page<CarResponseDto>> getAllCarsWithShowroom (@RequestParam(defaultValue = "1") int pageNo,
+                                                                        @RequestParam(defaultValue = "10") int pageSize) {
+        Page<CarResponseDto> cars = carService.getAllCars(pageNo, pageSize);
         return new ResponseEntity<>(cars, HttpStatus.OK);
     }
 }
