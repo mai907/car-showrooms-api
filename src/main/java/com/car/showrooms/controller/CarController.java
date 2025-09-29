@@ -1,6 +1,7 @@
 package com.car.showrooms.controller;
 
 
+import com.car.showrooms.dao.CarSearchRequest;
 import com.car.showrooms.dto.CarRequestDto;
 import com.car.showrooms.dto.CarResponseDto;
 import com.car.showrooms.entity.Car;
@@ -31,8 +32,9 @@ public class CarController {
     //    7.	List Cars with Showroom Details API
     @GetMapping
     public ResponseEntity<Page<CarResponseDto>> getAllCarsWithShowroom (@RequestParam(defaultValue = "1") int pageNo,
-                                                                        @RequestParam(defaultValue = "10") int pageSize) {
-        Page<CarResponseDto> cars = carService.getAllCars(pageNo, pageSize);
+                                                                        @RequestParam(defaultValue = "10") int pageSize,
+                                                                        @RequestBody CarSearchRequest searchRequest) {
+        Page<CarResponseDto> cars = carService.getAllCars(pageNo, pageSize, searchRequest);
         return new ResponseEntity<>(cars, HttpStatus.OK);
     }
 }

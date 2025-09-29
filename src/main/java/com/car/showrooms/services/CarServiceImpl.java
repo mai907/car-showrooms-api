@@ -1,5 +1,7 @@
 package com.car.showrooms.services;
 
+import com.car.showrooms.dao.CarSearchDao;
+import com.car.showrooms.dao.CarSearchRequest;
 import com.car.showrooms.dto.CarRequestDto;
 import com.car.showrooms.dto.CarResponseDto;
 import com.car.showrooms.entity.Car;
@@ -24,6 +26,7 @@ public class CarServiceImpl implements CarService {
 
     private CarRepository carRepository;
     private ShowroomRepository showroomRepository;
+    private CarSearchDao carSearchDao;
 
     @Override
     public CarResponseDto createCar(Long id, CarRequestDto carRequestDto) {
@@ -35,13 +38,22 @@ public class CarServiceImpl implements CarService {
         return CarMapper.MAPPER.mapToCarResponseDto(savedCar);
     }
 
+//    @Override
+//    public Page<CarResponseDto> getAllCars(int page, int size) {
+//        Pageable pageable = PageRequest.of(page-1, size);
+//        Page<Car> cars = carRepository.findByShowroom_DeletedFalse(pageable);
+//       var dtoList =  cars.stream().map(CarMapper.MAPPER::mapToCarResponseDto)
+//                .collect(Collectors.toList());
+//         return new PageImpl<>(dtoList, cars.getPageable(), cars.getTotalElements());
+//    }
+
     @Override
-    public Page<CarResponseDto> getAllCars(int page, int size) {
+    public Page<CarResponseDto> getAllCars(int page, int size, CarSearchRequest searchRequest) {
         Pageable pageable = PageRequest.of(page-1, size);
-        Page<Car> cars = carRepository.findByShowroom_DeletedFalse(pageable);
-       var dtoList =  cars.stream().map(CarMapper.MAPPER::mapToCarResponseDto)
+        List<Car> cars = carSearchDao.findAllByCriteria(searchRequest);
+        var dtoList =  cars.stream().map(CarMapper.MAPPER::mapToCarResponseDto)
                 .collect(Collectors.toList());
-         return new PageImpl<>(dtoList, cars.getPageable(), cars.getTotalElements());
+        return new PageImpl<>(dtoList, pageable, size);
     }
 
 }
