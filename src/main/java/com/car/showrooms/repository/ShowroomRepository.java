@@ -12,4 +12,6 @@ public interface ShowroomRepository extends JpaRepository<Showroom, Long> {
 
     Optional<Showroom> findByIdAndDeletedIsFalse(Long id);
 
+    Optional<Showroom> findByCmr(Long cmr);
+
 }
