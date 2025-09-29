@@ -12,18 +12,25 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "TBL_CAR")
+@Table(name = "TBL_CARS")
 public class Car {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @Column(nullable = false, length = 25)
+    private String vin;
+    @Column(nullable = false, length = 25)
     private String maker;
+    @Column(nullable = false, length = 25)
     private String model;
+    @Column(nullable = false, length = 4)
     private Integer modelYear;
-    private double price;
+    @Column(nullable = false)
+    private Double price;
 
-    //rel with car shoomer
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "showroom_id")
+    private Showroom showroom;
 
 }

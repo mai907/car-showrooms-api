@@ -4,12 +4,14 @@ package com.car.showrooms.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "TBL_SHOWROOM")
+@Table(name = "TBL_SHOWROOMS")
 public class Showroom {
 
     @Id
@@ -26,5 +28,8 @@ public class Showroom {
     @Column(length = 255)
     private String address;
     private boolean deleted;
+
+    @OneToMany(mappedBy = "showroom")
+    private List<Car> cars;
 
 }
