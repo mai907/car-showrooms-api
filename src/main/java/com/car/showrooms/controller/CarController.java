@@ -30,7 +30,7 @@ public class CarController {
     }
 
     //    7.	List Cars with Showroom Details API
-    @GetMapping
+    @PatchMapping
     public ResponseEntity<Page<CarResponseDto>> getAllCarsWithShowroom (@RequestParam(defaultValue = "1") int pageNo,
                                                                         @RequestParam(defaultValue = "10") int pageSize,
                                                                         @RequestBody CarSearchRequest searchRequest) {

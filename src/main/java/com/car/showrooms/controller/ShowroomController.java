@@ -2,12 +2,10 @@ package com.car.showrooms.controller;
 
 import com.car.showrooms.dto.ShowroomRequestDto;
 import com.car.showrooms.dto.ShowroomResponseDto;
-import com.car.showrooms.entity.Car;
-import com.car.showrooms.entity.Showroom;
+import com.car.showrooms.dto.ShowroomUpdateRequestDto;
 import com.car.showrooms.services.ShowroomService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,9 +45,9 @@ public class ShowroomController {
     }
 
 //4.	Update Car Showroom API
-    @PutMapping("{id}")
+    @PatchMapping("{id}")
     public ResponseEntity<ShowroomResponseDto> updateShowroomById (@PathVariable Long id,
-                                                                   @Valid @RequestBody ShowroomRequestDto ShowroomDto) {
+                                                                   @Valid @RequestBody ShowroomUpdateRequestDto ShowroomDto) {
         ShowroomResponseDto showroomResDto = showroomService.updateShowroom(id, ShowroomDto);
         return new ResponseEntity<>(showroomResDto, HttpStatus.OK);
     }
@@ -58,8 +56,15 @@ public class ShowroomController {
     @DeleteMapping("{id}")
     public ResponseEntity<String> deleteShowroomById (@PathVariable Long id) {
         showroomService.deleteShowroom(id);
-       return new ResponseEntity<>("Showroom deleted", HttpStatus.OK);
+       return  ResponseEntity.ok().build();
     }
+
+    @GetMapping("/list")
+    public ResponseEntity<List<ShowroomResponseDto>> getAllShowroom () {
+        List<ShowroomResponseDto> Showrooms =  showroomService.getAllShowrooms();
+        return new ResponseEntity<>(Showrooms, HttpStatus.OK);
+    }
+
 
 
 

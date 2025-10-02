@@ -2,6 +2,7 @@ package com.car.showrooms.services;
 
 import com.car.showrooms.dto.ShowroomRequestDto;
 import com.car.showrooms.dto.ShowroomResponseDto;
+import com.car.showrooms.dto.ShowroomUpdateRequestDto;
 import com.car.showrooms.entity.Showroom;
 import com.car.showrooms.exception.CMRAlreadyExistsException;
 import com.car.showrooms.exception.ResourceNotFoundException;
@@ -61,7 +62,7 @@ public class ShowroomServiceImpl implements ShowroomService {
     }
 
     @Override
-    public ShowroomResponseDto updateShowroom(Long id, ShowroomRequestDto showroomDto) {
+    public ShowroomResponseDto updateShowroom(Long id, ShowroomUpdateRequestDto showroomDto) {
         Showroom showroom = showroomRepository.findByIdAndDeletedIsFalse(id).
                 orElseThrow(() -> new ResourceNotFoundException("The requested Showroom was not found when updating with id: " + id));
 
@@ -79,5 +80,13 @@ public class ShowroomServiceImpl implements ShowroomService {
                 orElseThrow(() -> new ResourceNotFoundException("The requested Showroom was not found when deleting with ID id: " + id));
         showroom.setDeleted(true);
         showroomRepository.save(showroom);
+    }
+
+    @Override
+    public List<ShowroomResponseDto> getAllShowrooms() {
+        List<Showroom> showroom =  showroomRepository.findAll();
+        return  showroom.stream()
+                .map(ShowroomMapper.MAPPER::mapToShowroomResponseDto)
+                .collect(Collectors.toList());
     }
 }
