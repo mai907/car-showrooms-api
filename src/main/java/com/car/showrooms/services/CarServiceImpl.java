@@ -1,5 +1,7 @@
 package com.car.showrooms.services;
 
+import com.car.showrooms.specification.CarSpecificationRepository;
+import com.car.showrooms.specification.CarSpecs;
 import com.car.showrooms.dao.CarSearchDao;
 import com.car.showrooms.dao.CarSearchRequest;
 import com.car.showrooms.dto.CarRequestDto;
@@ -17,7 +19,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,6 +28,9 @@ public class CarServiceImpl implements CarService {
     private CarRepository carRepository;
     private ShowroomRepository showroomRepository;
     private CarSearchDao carSearchDao;
+    private CarSpecificationRepository specificationRepository;
+    private CarSpecs carSpecs;
+
 
     @Override
     public CarResponseDto createCar(Long id, CarRequestDto carRequestDto) {
@@ -38,22 +42,14 @@ public class CarServiceImpl implements CarService {
         return CarMapper.MAPPER.mapToCarResponseDto(savedCar);
     }
 
-//    @Override
-//    public Page<CarResponseDto> getAllCars(int page, int size) {
-//        Pageable pageable = PageRequest.of(page-1, size);
-//        Page<Car> cars = carRepository.findByShowroom_DeletedFalse(pageable);
-//       var dtoList =  cars.stream().map(CarMapper.MAPPER::mapToCarResponseDto)
-//                .collect(Collectors.toList());
-//         return new PageImpl<>(dtoList, cars.getPageable(), cars.getTotalElements());
-//    }
 
     @Override
     public Page<CarResponseDto> getAllCars(int page, int size, CarSearchRequest searchRequest) {
         Pageable pageable = PageRequest.of(page-1, size);
-        List<Car> cars = carSearchDao.findAllByCriteria(searchRequest);
+        Page<Car> cars = carSpecs.findCarsByCriteria(searchRequest, pageable);
         var dtoList =  cars.stream().map(CarMapper.MAPPER::mapToCarResponseDto)
                 .collect(Collectors.toList());
-        return new PageImpl<>(dtoList, pageable, size);
+        return new PageImpl<>(dtoList, cars.getPageable(), cars.getTotalElements());
     }
 
 }
