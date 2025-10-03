@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +21,7 @@ public class ShowroomController {
     private ShowroomService showroomService;
 
 //1.	Create Car Showroom API
+@PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<ShowroomResponseDto> createShowroom (@RequestBody @Valid ShowroomRequestDto showroomDto) {
         ShowroomResponseDto showroomResDto = showroomService.createShowroom(showroomDto);
@@ -28,6 +30,7 @@ public class ShowroomController {
     }
 
 //2.	List Car Showrooms API
+@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping
     public ResponseEntity<Page<ShowroomResponseDto>> getAllShowroom (@RequestParam(defaultValue = "1") int pageNo,
                                                                      @RequestParam(defaultValue = "10") int pageSize,
@@ -38,6 +41,7 @@ public class ShowroomController {
     }
 
 //3.	Get Specific Car Showroom API
+@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping("{id}")
     public ResponseEntity<ShowroomResponseDto> getShowroom (@PathVariable Long id) {
         ShowroomResponseDto showroomResDto =  showroomService.getShowroomById(id);
@@ -45,6 +49,7 @@ public class ShowroomController {
     }
 
 //4.	Update Car Showroom API
+@PreAuthorize("hasRole('ADMIN')")
     @PatchMapping("{id}")
     public ResponseEntity<ShowroomResponseDto> updateShowroomById (@PathVariable Long id,
                                                                    @Valid @RequestBody ShowroomUpdateRequestDto ShowroomDto) {
@@ -53,12 +58,13 @@ public class ShowroomController {
     }
 
 //5.	Delete Car Showroom API
+@PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("{id}")
     public ResponseEntity<String> deleteShowroomById (@PathVariable Long id) {
         showroomService.deleteShowroom(id);
        return  ResponseEntity.ok().build();
     }
-
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/list")
     public ResponseEntity<List<ShowroomResponseDto>> getAllShowroom () {
         List<ShowroomResponseDto> Showrooms =  showroomService.getAllShowrooms();
