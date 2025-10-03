@@ -21,10 +21,15 @@ Before running the backend application, you need to set up the database.
    - Once the data is inserted, you can log in with the following test credentials:
 
 ```
+-User
+Email: t@m.com
+Username: user
+Password: 123456
 
-Email: test@t.com
-Username: tester
-Password: dfghgg
+-Admin
+Email: a@m.com
+Username: admin
+Password: 123456
 
 ```
 
