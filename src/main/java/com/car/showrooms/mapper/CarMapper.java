@@ -4,7 +4,6 @@ package com.car.showrooms.mapper;
 import com.car.showrooms.dto.CarRequestDto;
 import com.car.showrooms.dto.CarResponseDto;
 import com.car.showrooms.entity.Car;
-import com.car.showrooms.entity.Showroom;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;

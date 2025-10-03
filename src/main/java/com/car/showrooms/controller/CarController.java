@@ -4,7 +4,6 @@ package com.car.showrooms.controller;
 import com.car.showrooms.dao.CarSearchRequest;
 import com.car.showrooms.dto.CarRequestDto;
 import com.car.showrooms.dto.CarResponseDto;
-import com.car.showrooms.entity.Car;
 import com.car.showrooms.services.CarService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;

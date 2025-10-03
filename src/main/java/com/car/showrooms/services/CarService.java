@@ -6,7 +6,6 @@ import com.car.showrooms.dto.CarRequestDto;
 import com.car.showrooms.dto.CarResponseDto;
 import org.springframework.data.domain.Page;
 
-import java.util.List;
 
 public interface CarService {
     CarResponseDto createCar(Long id, CarRequestDto carRequestDto);
