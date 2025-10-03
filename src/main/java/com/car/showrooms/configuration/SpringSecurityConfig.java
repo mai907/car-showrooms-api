@@ -4,6 +4,7 @@ package com.car.showrooms.configuration;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -32,12 +33,7 @@ public class SpringSecurityConfig {
             try {
                 csrf.disable()
                         .authorizeHttpRequests(authorize -> {
-//                            authorize.requestMatchers(HttpMethod.POST, "/api/**").hasRole("ADMIN");
-//                            authorize.requestMatchers(HttpMethod.PUT, "/api/**").hasRole("ADMIN");
-//                            authorize.requestMatchers(HttpMethod.DELETE, "/api/**").hasRole("ADMIN");
-//                            authorize.requestMatchers(HttpMethod.GET, "/api/**").hasAnyRole("ADMIN", "USER");
-//                            authorize.requestMatchers(HttpMethod.PATCH, "/api/**").hasAnyRole("ADMIN", "USER");
-//                            authorize.requestMatchers(HttpMethod.GET, "/api/**").permitAll();
+//                            authorize.requestMatchers(HttpMethod.GET, "/api/login").permitAll();
                             authorize.anyRequest().authenticated();
                         }
                 ).httpBasic(Customizer.withDefaults());
