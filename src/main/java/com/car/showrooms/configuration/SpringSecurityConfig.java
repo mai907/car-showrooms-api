@@ -28,17 +28,14 @@ public class SpringSecurityConfig {
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf((csrf) -> {
-            try {
-                csrf.disable()
-                        .authorizeHttpRequests(authorize -> {
-                            authorize.anyRequest().authenticated();
-                        }
-                ).httpBasic(Customizer.withDefaults());
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        });
+        http
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/login").permitAll() // allow login endpoint
+                        .anyRequest().authenticated()
+                )
+                .httpBasic(Customizer.withDefaults());
+
         return http.build();
 
     }
